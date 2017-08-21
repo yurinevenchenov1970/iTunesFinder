@@ -34,7 +34,7 @@ public class Track implements Serializable {
     private String mCoverUrl;
 
     @NonNull
-    private String mTrackPrice;
+    private double mTrackPrice;
 
     public Track() {
         //empty constructor needed by Jackson
@@ -100,15 +100,13 @@ public class Track implements Serializable {
         mCoverUrl = coverUrl;
     }
 
-    @NonNull
     @JsonGetter("trackPrice")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String getTrackPrice() {
+    public double getTrackPrice() {
         return mTrackPrice;
     }
 
     @JsonGetter("trackPrice")
-    public void setTrackPrice(@NonNull String trackPrice) {
+    public void setTrackPrice(double trackPrice) {
         mTrackPrice = trackPrice;
     }
 
@@ -118,12 +116,12 @@ public class Track implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Track track = (Track) o;
-        return Objects.equal(mArtistName, track.mArtistName) &&
+        return Double.compare(track.mTrackPrice, mTrackPrice) == 0 &&
+                Objects.equal(mArtistName, track.mArtistName) &&
                 Objects.equal(mTrackName, track.mTrackName) &&
                 Objects.equal(mArtistViewUrl, track.mArtistViewUrl) &&
                 Objects.equal(mTrackPreviewUrl, track.mTrackPreviewUrl) &&
-                Objects.equal(mCoverUrl, track.mCoverUrl) &&
-                Objects.equal(mTrackPrice, track.mTrackPrice);
+                Objects.equal(mCoverUrl, track.mCoverUrl);
     }
 
     @JsonIgnore
