@@ -24,7 +24,7 @@ import yurinevenchenov1970.github.com.itunesfinder.bean.TracksResponse;
  */
 public class MainFragment extends Fragment implements TrackClickListener {
 
-    private static final String EXTRA_TRACKS_RESPONCE = "extra_tracks_response";
+    private static final String EXTRA_TRACKS_RESPONSE = "extra_tracks_response";
 
     private TracksResponse mTracksResponse;
     private OnItemClickListener mListener;
@@ -41,8 +41,7 @@ public class MainFragment extends Fragment implements TrackClickListener {
     public static MainFragment newInstance(TracksResponse response) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
-        args.putSerializable(EXTRA_TRACKS_RESPONCE, response);
-        ;
+        args.putSerializable(EXTRA_TRACKS_RESPONSE, response);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +61,7 @@ public class MainFragment extends Fragment implements TrackClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mTracksResponse = (TracksResponse) getArguments().getSerializable(EXTRA_TRACKS_RESPONCE);
+            mTracksResponse = (TracksResponse) getArguments().getSerializable(EXTRA_TRACKS_RESPONSE);
         }
         mAdapter = new TrackAdapter(mTracksResponse, this);
     }
