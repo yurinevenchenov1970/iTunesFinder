@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small">
+
+    <ImageView
+        android:id="@+id/cover_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_small"
+        tools:src="@android:drawable/btn_star"/>
+
+    <TextView
+        android:id="@+id/artist_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/cover_image_view"
+        android:layout_toEndOf="@+id/cover_image_view"
+        android:layout_toRightOf="@+id/cover_image_view"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+        tools:text="artist name"/>
+
+    <TextView
+        android:id="@+id/track_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/cover_image_view"
+        android:layout_below="@+id/artist_name_text_view"
+        android:layout_toEndOf="@+id/cover_image_view"
+        android:layout_toRightOf="@+id/cover_image_view"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+        tools:text="track name"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/devider_height"
+        android:layout_below="@id/track_name_text_view"
+        android:layout_marginTop="@dimen/padding_small"
+        android:background="@color/colorPrimaryDark"/>
+
+
+</RelativeLayout>
