@@ -14,12 +14,14 @@ import android.widget.Toast;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import yurinevenchenov1970.github.com.itunesfinder.bean.Track;
 import yurinevenchenov1970.github.com.itunesfinder.bean.TracksResponse;
 import yurinevenchenov1970.github.com.itunesfinder.net.ApiClient;
 import yurinevenchenov1970.github.com.itunesfinder.net.TrackService;
 
-public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements MainFragment.OnItemClickListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private Toolbar mToolbar;
 
     @Override
@@ -30,9 +32,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         createSearchView();
     }
 
-    private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+    @Override
+    public void onItemClick(Track track) {
+        // TODO: 8/22/2017 go to new Activity
+        Toast.makeText(getApplicationContext(), "here we are " + track.getTrackPreviewUrl(), Toast.LENGTH_LONG).show();
     }
 
     private void createSearchView() {
@@ -55,6 +58,11 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         });
     }
 
+    private void initToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+    }
+
     private void getDataFromServer(String query) {
         TrackService service = ApiClient.getClient().create(TrackService.class);
         Call<TracksResponse> responseCall = service.getTracks(query);
@@ -64,27 +72,22 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             public void onResponse(Call<TracksResponse> call, Response<TracksResponse> response) {
                 TracksResponse tracksResponse = response.body();
                 if (tracksResponse != null) {
-                    Log.d("MainActivity", tracksResponse.toString());
+                    startFragment(tracksResponse);
                 }
             }
 
             @Override
             public void onFailure(Call<TracksResponse> call, Throwable t) {
-                Log.e("MainActivity", "failure" + t.getMessage());
+                Log.e(TAG, "failure" + t.getMessage());
             }
         });
     }
 
-    private void startFragment(String query) {
+    private void startFragment(TracksResponse response) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.container, MainFragment.newInstance(query, null))
+        transaction.replace(R.id.container, MainFragment.newInstance(response))
                 .addToBackStack(null)
                 .commit();
-    }
-
-    @Override
-    public void onFragmentInteraction(String string) {
-        Toast.makeText(getApplicationContext(), "here we are " + string, Toast.LENGTH_LONG).show();
     }
 }
