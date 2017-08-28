@@ -16,7 +16,6 @@ import yurinevenchenov1970.github.com.itunesfinder.adapter.TrackClickListener;
 import yurinevenchenov1970.github.com.itunesfinder.bean.Track;
 import yurinevenchenov1970.github.com.itunesfinder.bean.TracksResponse;
 
-
 /**
  * Main Fragment to show list of item
  *
@@ -24,6 +23,7 @@ import yurinevenchenov1970.github.com.itunesfinder.bean.TracksResponse;
  */
 public class MainFragment extends Fragment implements TrackClickListener {
 
+    public static final String TAG = MainFragment.class.getSimpleName();
     private static final String EXTRA_TRACKS_RESPONSE = "extra_tracks_response";
 
     private TracksResponse mTracksResponse;

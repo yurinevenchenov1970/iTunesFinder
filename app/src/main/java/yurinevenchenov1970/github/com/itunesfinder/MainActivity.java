@@ -9,8 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,28 +23,32 @@ import yurinevenchenov1970.github.com.itunesfinder.net.TrackService;
 public class MainActivity extends AppCompatActivity implements MainFragment.OnItemClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private Toolbar mToolbar;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.search)
+    SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initToolbar();
+        ButterKnife.bind(this);
+        setToolbar();
         createSearchView();
     }
 
     @Override
     public void onItemClick(Track track) {
-        // TODO: 8/22/2017 go to new Activity
-        Toast.makeText(getApplicationContext(), "here we are " + track.getTrackPreviewUrl(), Toast.LENGTH_LONG).show();
+        startActivity(TrackDetailActivity.createExplicitIntent(this, track));
     }
 
     private void createSearchView() {
-        SearchView searchView = (SearchView) findViewById(R.id.search);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 getDataFromServer(query);
@@ -58,8 +63,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnIt
         });
     }
 
-    private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+    private void setToolbar() {
         setSupportActionBar(mToolbar);
     }
 
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnIt
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, MainFragment.newInstance(response))
-                .addToBackStack(null)
+                .addToBackStack(MainFragment.TAG)
                 .commit();
     }
 }
