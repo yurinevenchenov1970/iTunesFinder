@@ -139,4 +139,5 @@ public class MusicPlayerFragment extends Fragment {
         mPlayButton.setEnabled(true);
         mPauseButton.setEnabled(false);
     }
+    // TODO: 8/28/2017 release music player
 }
