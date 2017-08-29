@@ -38,6 +38,10 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackViewHolder> {
         holder.mTrackNameTextView.setText(track.getTrackName());
         Picasso.with(holder.itemView.getContext())
                 .load(track.getCoverUrl())
+                .resize(500,500)
+                .centerCrop()
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.error)
                 .into(holder.mCoverImageView);
     }
 
