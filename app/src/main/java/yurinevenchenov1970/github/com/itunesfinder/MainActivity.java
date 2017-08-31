@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +20,7 @@ import yurinevenchenov1970.github.com.itunesfinder.bean.Track;
 import yurinevenchenov1970.github.com.itunesfinder.bean.TracksResponse;
 import yurinevenchenov1970.github.com.itunesfinder.net.ApiClient;
 import yurinevenchenov1970.github.com.itunesfinder.net.TrackService;
+import yurinevenchenov1970.github.com.itunesfinder.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements MainFragment.OnItemClickListener {
 
@@ -51,8 +53,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnIt
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getDataFromServer(query);
-                //startFragment(query);
+                if(Utils.isNetworkConnected(getApplicationContext())){
+                    getDataFromServer(query);
+                    mSearchView.clearFocus();
+                } else {
+                    showConnectionMessage();
+                }
                 return true;
             }
 
@@ -93,5 +99,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnIt
         transaction.replace(R.id.container, MainFragment.newInstance(response))
                 .addToBackStack(MainFragment.TAG)
                 .commit();
+    }
+
+    private void showConnectionMessage(){
+        Toast.makeText(this, getString(R.string.no_connection), Toast.LENGTH_LONG).show();
     }
 }
