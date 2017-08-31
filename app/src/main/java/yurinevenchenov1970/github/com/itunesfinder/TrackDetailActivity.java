@@ -2,10 +2,10 @@ package yurinevenchenov1970.github.com.itunesfinder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,6 +59,14 @@ public class TrackDetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MusicPlayerFragment fragment =
+                (MusicPlayerFragment) getSupportFragmentManager().findFragmentById(R.id.music_player_container);
+        fragment.onBackPressed();
+    }
+
     private void getDataFromIntent() {
         mTrack = (Track) getIntent().getExtras().getSerializable(EXTRA_TRACK);
     }
@@ -74,7 +82,7 @@ public class TrackDetailActivity extends AppCompatActivity {
     private void fillMusicPlayerFragment() {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.music_player_container,
-                MusicPlayerFragment.newInstance(mTrack.getTrackPreviewUrl()))
+                MusicPlayerFragment.newInstance(mTrack.getTrackPreviewUrl()), MusicPlayerFragment.TAG)
                 .commit();
     }
 
