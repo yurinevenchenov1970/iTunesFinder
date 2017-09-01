@@ -1,11 +1,16 @@
 Application iTunesFinder by search keyword using API from Apple (https://itunes.apple.com/search?term=SEARCH_KEYWORD) shows list of music compositions with such details:
 album icon, artist name and track name.
+
+
 Click on the list item passes user to detailed view of track which includes:
 album icon, artist name, track name  and track price; and player interface to listening 30s track preview.
+
+
 Here is preview of the app:
 
 
 
+![screenshot](https://user-images.githubusercontent.com/29121233/29964359-798be2b0-8f12-11e7-9414-5f5fb9868913.gif)
 
 
 
